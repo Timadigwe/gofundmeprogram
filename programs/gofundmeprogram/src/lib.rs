@@ -14,6 +14,8 @@ pub mod gofundmeprogram {
 
     pub fn initialize(ctx: Context<Initialize>, campaign_name: String) -> Result<()> {
         let campaign = &mut ctx.accounts.campaign;
+
+        println!("{campaign_name}");
         campaign.owner = *ctx.accounts.user.key;
         campaign.name = campaign_name;
         campaign.amount_raised = 0;
@@ -94,7 +96,7 @@ pub struct Initialize<'info> {
     #[account(
             init,
             payer = user,
-            seeds=[VAULT_PREFIX,mint_of_token_being_sent.key().as_ref(), campaign_name.as_ref()],
+            seeds=[campaign_name.as_ref()],
             token::mint = mint_of_token_being_sent,
             token::authority = campaign,
             bump
